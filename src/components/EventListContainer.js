@@ -1,31 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
-//import CreateRoom from "./CreateRoom";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { loadEvents } from "../actions";
+import EventList from "./EventList";
 
 class EventListContainer extends React.Component {
   render() {
-    console.log("this.props test:", this.props);
-    const events = this.props.events.map(event => (
-      <Link key={event.id} to={`/event/${event.id}`}>
-        <div>{event.event_name}</div>
-      </Link>
-    ));
-
-    console.log("events test:", events);
+    this.props.loadEvents();
+    var style = {
+      padding: "10px",
+      fontWeight: "bold"
+    };
 
     return (
       <div>
-        <div>{events}</div>
+        <p>Event List:</p>
+        <EventList events={this.props.events} />
+        <br />
+        <br />
+        <br />
+        <NavLink to="/event/addEvent">
+          <label style={style}>Add New Events</label>
+        </NavLink>
       </div>
     );
   }
 }
 
+const mapDispatchToProps = { loadEvents };
+
 function mapStateToProps(state) {
   return {
-    events: state.events
+    events: state.eventList
   };
 }
 
-export default connect(mapStateToProps)(EventListContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EventListContainer);

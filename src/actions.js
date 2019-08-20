@@ -3,6 +3,8 @@ import { url } from "./constants";
 
 export const JWT = "JWT";
 export const NEW_NAME = "NEW_NAME";
+export const ALL_EVENTS = "ALL_EVENTS";
+export const ALL_TICKETS = "ALL_TICKETS";
 
 function jwt(payload) {
   return {
@@ -85,3 +87,39 @@ export function addComment(name, text, ticketId) {
       });
   };
 }
+
+function allEvents(payload) {
+  return {
+    type: ALL_EVENTS,
+    payload
+  };
+}
+
+export const loadEvents = () => (dispatch, getState) => {
+  if (getState().events) return;
+
+  request(`${url}/event`)
+    .then(response => {
+      //console.log("response.body test:", response.body.events);
+      dispatch(allEvents(response.body.events));
+    })
+    .catch(console.error);
+};
+
+function allTickets(payload) {
+  return {
+    type: ALL_TICKETS,
+    payload
+  };
+}
+
+export const loadTickets = () => (dispatch, getState) => {
+  if (getState().tickets) return;
+
+  request(`${url}/event/:eventId/tickets"`)
+    .then(response => {
+      //console.log("response.body test:", response.body.events);
+      dispatch(allTickets(response.body.events));
+    })
+    .catch(console.error);
+};
