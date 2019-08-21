@@ -4,7 +4,8 @@ import { url } from "./constants";
 export const JWT = "JWT";
 export const NEW_NAME = "NEW_NAME";
 export const ALL_EVENTS = "ALL_EVENTS";
-export const ALL_TICKETS = "ALL_TICKETS";
+export const EVENT_TICKETS = "EVENT_TICKETS";
+export const TICKET_COMMENTS = "TICKET_COMMENTS";
 
 function jwt(payload) {
   return {
@@ -106,20 +107,38 @@ export const loadEvents = () => (dispatch, getState) => {
     .catch(console.error);
 };
 
-function allTickets(payload) {
+function eventTickets(payload) {
   return {
-    type: ALL_TICKETS,
+    type: EVENT_TICKETS,
     payload
   };
 }
 
-export const loadTickets = () => (dispatch, getState) => {
+export const loadTickets = event => (dispatch, getState) => {
   if (getState().tickets) return;
 
-  request(`${url}/event/:eventId/tickets"`)
+  request(`${url}/event/${event}/tickets`)
     .then(response => {
-      //console.log("response.body test:", response.body.events);
-      dispatch(allTickets(response.body.events));
+      //console.log("response.body test:", response.body);
+      dispatch(eventTickets(response.body));
+    })
+    .catch(console.error);
+};
+
+function ticketComments(payload) {
+  return {
+    type: TICKET_COMMENTS,
+    payload
+  };
+}
+
+export const loadComments = ticket => (dispatch, getState) => {
+  if (getState().comments) return;
+
+  request(`${url}/ticket/${ticket}/comments`)
+    .then(response => {
+      //console.log("response.body test:", response.body);
+      dispatch(ticketComments(response.body));
     })
     .catch(console.error);
 };

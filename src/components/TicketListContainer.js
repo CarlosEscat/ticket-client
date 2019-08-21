@@ -1,17 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-//import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { loadTickets } from "../actions";
-import TicketList from "./EventList";
+import TicketList from "./TicketList";
 
 class TicketListContainer extends React.Component {
   render() {
-    this.props.loadTickets();
-    // var style = {
-    //   padding: "10px",
-    //   fontWeight: "bold"
-    // };
+    const eventId = this.props.match.params.eventId;
+    this.props.loadTickets(eventId);
+    var style = {
+      padding: "10px",
+      fontWeight: "bold"
+    };
 
+    //console.log(eventId);
     return (
       <div>
         <p>Ticket List:</p>
@@ -19,9 +21,9 @@ class TicketListContainer extends React.Component {
         <br />
         <br />
         <br />
-        {/* <NavLink to="/event/addEvent">
-          <label style={style}>Add New Events</label>
-        </NavLink> */}
+        <NavLink to={`/event/${eventId}/Addticket`}>
+          <label style={style}>Add New Ticket</label>
+        </NavLink>
       </div>
     );
   }

@@ -18,7 +18,7 @@ export default class ButtonListContainer extends Component {
         <NavLink to="/event">
           <label style={style}>Events</label>
         </NavLink>
-        <NavLink to="/start">
+        <NavLink to="/event/1/tickets">
           <label style={style}>User</label>
         </NavLink>
       </div>

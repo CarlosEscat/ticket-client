@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createTicket } from "../actions";
+import "./SignUp.css";
 
 class addTicket extends React.Component {
   state = {
@@ -14,9 +15,10 @@ class addTicket extends React.Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    const { price, description, picture, eventId, userId } = this.state;
-
-    this.props.addEvent(price, description, picture, eventId, userId);
+    const { price, description, picture, userId } = this.state;
+    const eventId = this.props.match.params.eventId;
+    //console.log("eventId test: ", eventId);
+    this.props.createTicket(price, description, picture, eventId, userId);
 
     this.setState({
       price: "",
@@ -38,7 +40,7 @@ class addTicket extends React.Component {
       <div>
         <h2> Add New Ticket </h2>
 
-        <div>
+        <div className="signup">
           <form onSubmit={this.onSubmit}>
             <p>Ticket price:</p>
             <input
@@ -64,14 +66,14 @@ class addTicket extends React.Component {
               placeholder={"Ticket picture url"}
               onChange={this.onChange}
             />
-            <p>Event Id:</p>
+            {/* <p>Event Id:</p>
             <input
               type="text"
               name="eventId"
               value={this.state.eventId}
               placeholder={"Event Id"}
               onChange={this.onChange}
-            />
+            /> */}
             <p>User Id:</p>
             <input
               type="text"

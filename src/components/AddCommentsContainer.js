@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { addComment } from "../actions";
 
-class CommentsContainer extends React.Component {
+class AddCommentsContainer extends React.Component {
   state = {
     name: "",
     text: "",
@@ -11,7 +11,8 @@ class CommentsContainer extends React.Component {
 
   onSubmit = async event => {
     event.preventDefault();
-
+    // const ticketId = parseInt(this.props.match.params.ticketId);
+    // console.log("comment ticket id test: ", ticketId);
     const { name, text, ticketId } = this.state;
 
     this.props.addComment(name, text, ticketId);
@@ -61,6 +62,7 @@ class CommentsContainer extends React.Component {
               onChange={this.onChange}
             />
             <br />
+            <br />
             <button type="submit"> Add Comment </button>
           </form>
         </div>
@@ -75,4 +77,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(CommentsContainer);
+)(AddCommentsContainer);
