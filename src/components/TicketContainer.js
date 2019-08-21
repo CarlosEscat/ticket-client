@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 //import { NavLink } from "react-router-dom";
-import { loadTickets } from "../actions";
+import { loadTickets, loadUsers } from "../actions";
 import AddCommentsContainer from "./AddCommentsContainer";
 import CommentListContainer from "./CommentListContainer";
 
@@ -13,8 +13,13 @@ class TicketContainer extends React.Component {
       return element.id === ticketId;
     });
 
-    // console.log("ticket id test: ", ticketId);
-    // console.log("tickets array test: ", tickets);
+    const users = this.props.users;
+    const myuser = users.find(function(element) {
+      return element.id === myticket.userId;
+    });
+    //console.log("users test: ", users);
+    //console.log("myusers test: ", myuser);
+    //console.log("tickets array test: ", this.props.comments);
     // console.log("ticket details test: ", myticket);
     var style = {
       padding: "10px",
@@ -23,27 +28,29 @@ class TicketContainer extends React.Component {
 
     return (
       <div>
-        <h2>Ticket from user {myticket.userId}</h2>
+        <h2>Ticket from user {myuser.name}</h2>
         <h3>Risk: %</h3>
         <p style={style}>EUR {myticket.price} </p>
         <label>Description: {myticket.description}</label>
 
         <div>
-          <CommentListContainer />
+          <CommentListContainer tickets={myticket} />
         </div>
         <div>
-          <AddCommentsContainer tickets={ticketId} />
+          <AddCommentsContainer tickets={myticket} />
         </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = { loadTickets };
+const mapDispatchToProps = { loadTickets, loadUsers };
 
 function mapStateToProps(state) {
   return {
-    tickets: state.ticketList
+    users: state.userlist,
+    tickets: state.ticketList,
+    comments: state.commentList
   };
 }
 

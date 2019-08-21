@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { loadEvents } from "../actions";
+import { loadEvents, loadUsers } from "../actions";
 import EventList from "./EventList";
 
 class EventListContainer extends React.Component {
   render() {
     this.props.loadEvents();
+    this.props.loadUsers();
     var style = {
       padding: "10px",
       fontWeight: "bold"
@@ -27,7 +28,7 @@ class EventListContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = { loadEvents };
+const mapDispatchToProps = { loadEvents, loadUsers };
 
 function mapStateToProps(state) {
   return {

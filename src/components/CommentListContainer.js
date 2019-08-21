@@ -4,12 +4,16 @@ import { loadComments } from "../actions";
 import CommentList from "./CommentList";
 
 class CommentListContainer extends React.Component {
+  state = {
+    name: "",
+    text: ""
+  };
   render() {
-    //const ticketId = this.props.match.params.ticketId;
-    const ticketId = 1;
+    const ticketId = this.props.tickets.id;
+
     this.props.loadComments(ticketId);
 
-    //console.log(ticketId);
+    //console.log(this.props.tickets.id);
     return (
       <div>
         <p>Comment List:</p>

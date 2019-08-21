@@ -2,7 +2,7 @@ import * as request from "superagent";
 import { url } from "./constants";
 
 export const JWT = "JWT";
-export const NEW_NAME = "NEW_NAME";
+export const ALL_USERS = "ALL_USERS";
 export const ALL_EVENTS = "ALL_EVENTS";
 export const EVENT_TICKETS = "EVENT_TICKETS";
 export const TICKET_COMMENTS = "TICKET_COMMENTS";
@@ -31,12 +31,23 @@ export function login(name, password) {
   };
 }
 
-export function newName(payload) {
+export function allUsers(payload) {
   return {
-    type: NEW_NAME,
+    type: ALL_USERS,
     payload
   };
 }
+
+export const loadUsers = () => (dispatch, getState) => {
+  if (getState().users) return;
+
+  request(`${url}/user`)
+    .then(response => {
+      //console.log("response.body test:", response.body.events);
+      dispatch(allUsers(response.body.users));
+    })
+    .catch(console.error);
+};
 
 export function addEvent(name, description, logo, start_date, end_date) {
   return function(dispatch) {

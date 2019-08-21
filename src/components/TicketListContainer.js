@@ -17,7 +17,7 @@ class TicketListContainer extends React.Component {
     return (
       <div>
         <p>Ticket List:</p>
-        <TicketList tickets={this.props.tickets} />
+        <TicketList tickets={this.props.tickets} users={this.props.users} />
         <br />
         <br />
         <br />
@@ -33,7 +33,8 @@ const mapDispatchToProps = { loadTickets };
 
 function mapStateToProps(state) {
   return {
-    tickets: state.ticketList
+    tickets: state.ticketList,
+    users: state.userlist
   };
 }
 

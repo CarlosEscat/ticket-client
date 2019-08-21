@@ -7,3 +7,12 @@
   padding-bottom: 50px;
   border-radius: 5px;
 }
+
+.labelStyle {
+  background-color: white;
+  color: black;
+  margin-left: 40%;
+  margin-right: 40%;
+
+  border-radius: 5px;
+}

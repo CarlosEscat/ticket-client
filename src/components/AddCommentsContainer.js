@@ -11,9 +11,9 @@ class AddCommentsContainer extends React.Component {
 
   onSubmit = async event => {
     event.preventDefault();
-    // const ticketId = parseInt(this.props.match.params.ticketId);
+    const ticketId = this.props.tickets.id;
     // console.log("comment ticket id test: ", ticketId);
-    const { name, text, ticketId } = this.state;
+    const { name, text } = this.state;
 
     this.props.addComment(name, text, ticketId);
 
@@ -53,14 +53,14 @@ class AddCommentsContainer extends React.Component {
               placeholder={"Comment"}
               onChange={this.onChange}
             />
-            <p>Ticket Id:</p>
+            {/* <p>Ticket Id:</p>
             <input
               type="text"
               name="ticketId"
               value={this.state.ticketId}
               placeholder={"Ticket Id"}
               onChange={this.onChange}
-            />
+            /> */}
             <br />
             <br />
             <button type="submit"> Add Comment </button>
