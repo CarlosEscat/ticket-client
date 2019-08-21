@@ -6,18 +6,28 @@ import TicketList from "./TicketList";
 
 class TicketListContainer extends React.Component {
   render() {
-    const eventId = this.props.match.params.eventId;
+    const eventId = parseInt(this.props.match.params.eventId);
     this.props.loadTickets(eventId);
+    const events = this.props.events;
+    const myevent = events.find(function(element) {
+      return element.id === eventId;
+    });
+
     var style = {
       padding: "10px",
       fontWeight: "bold"
     };
 
-    //console.log(eventId);
+    //console.log(myevent);
     return (
       <div>
+        <h1>EVENT: {myevent.name}</h1>
         <p>Ticket List:</p>
-        <TicketList tickets={this.props.tickets} users={this.props.users} />
+        <TicketList
+          tickets={this.props.tickets}
+          users={this.props.users}
+          event={myevent}
+        />
         <br />
         <br />
         <br />
@@ -34,7 +44,8 @@ const mapDispatchToProps = { loadTickets };
 function mapStateToProps(state) {
   return {
     tickets: state.ticketList,
-    users: state.userlist
+    users: state.userlist,
+    events: state.eventList
   };
 }
 

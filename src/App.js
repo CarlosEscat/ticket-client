@@ -8,6 +8,7 @@ import AddTicket from "./components/AddTicket";
 import EventListContainer from "./components/EventListContainer";
 import TicketListContainer from "./components/TicketListContainer";
 import TicketContainer from "./components/TicketContainer";
+import EditTicket from "./components/EditTicket";
 
 import "./App.css";
 
@@ -23,6 +24,7 @@ export default class App extends React.Component {
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/event" component={EventListContainer} />
         <Route exact path="/event/addEvent" component={AddEvent} />
+        <Route exact path="/event/editTicket" component={EditTicket} />
         <Route exact path="/event/:eventId/addTicket" component={AddTicket} />
         <Route
           exact

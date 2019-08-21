@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 
 export default function TicketList(props) {
   const tickets = props.tickets;
-  const users = props.users;
-  //console.log(users);
+  //const users = this.props.users;
+  //const event = props.event;
+  //console.log("testing event: ", event);
+
   var style = {
     padding: "10px",
     margin: "30px",

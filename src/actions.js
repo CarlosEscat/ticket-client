@@ -6,6 +6,7 @@ export const ALL_USERS = "ALL_USERS";
 export const ALL_EVENTS = "ALL_EVENTS";
 export const EVENT_TICKETS = "EVENT_TICKETS";
 export const TICKET_COMMENTS = "TICKET_COMMENTS";
+export const TICKET_EDIT = "TICKET_EDIT";
 
 function jwt(payload) {
   return {
@@ -150,6 +151,21 @@ export const loadComments = ticket => (dispatch, getState) => {
     .then(response => {
       //console.log("response.body test:", response.body);
       dispatch(ticketComments(response.body));
+    })
+    .catch(console.error);
+};
+
+const ticketEdit = ticket => ({
+  type: TICKET_EDIT,
+  ticket
+});
+
+export const updateTicket = (id, data) => dispatch => {
+  request
+    .put(`${url}/ticket/${id}`)
+    .send(data)
+    .then(response => {
+      dispatch(ticketEdit(response.body));
     })
     .catch(console.error);
 };
