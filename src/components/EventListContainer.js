@@ -17,6 +17,13 @@ class EventListContainer extends React.Component {
     const currentevents = this.props.events.filter(
       event => new Date(event.end_date) > today
     );
+
+    let isVisible = false;
+    const token = this.props.token;
+
+    if (Object.keys(token).length !== 0) {
+      isVisible = true;
+    }
     //console.log("current events: ", currentevents);
     return (
       <div>
@@ -25,9 +32,13 @@ class EventListContainer extends React.Component {
         <br />
         <br />
         <br />
-        <NavLink to="/event/addEvent">
-          <label style={style}>Add New Events</label>
-        </NavLink>
+        {isVisible ? (
+          <NavLink to="/event/addEvent">
+            <label style={style}>Add New Events</label>
+          </NavLink>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
@@ -37,7 +48,8 @@ const mapDispatchToProps = { loadEvents, loadUsers };
 
 function mapStateToProps(state) {
   return {
-    events: state.eventList
+    events: state.eventList,
+    token: state.userToken
   };
 }
 

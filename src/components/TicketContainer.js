@@ -38,6 +38,13 @@ class TicketContainer extends React.Component {
       color: mycolor
     };
 
+    let isVisible = false;
+    const token = this.props.token;
+
+    if (Object.keys(token).length !== 0) {
+      isVisible = true;
+    }
+
     return (
       <div>
         <h2>Ticket from user {myuser.name}</h2>
@@ -46,17 +53,25 @@ class TicketContainer extends React.Component {
         <label>Description: {myticket.description}</label>
         <br />
         <br />
-        <NavLink
-          to={{ pathname: "/event/editTicket", aboutProps: { myticket } }}
-        >
-          <label style={style}>Edit ticket</label>
-        </NavLink>
+        {isVisible ? (
+          <NavLink
+            to={{ pathname: "/event/editTicket", aboutProps: { myticket } }}
+          >
+            <label style={style}>Edit ticket</label>
+          </NavLink>
+        ) : (
+          <div />
+        )}
         <div>
           <CommentListContainer tickets={myticket} />
         </div>
-        <div>
-          <AddCommentsContainer tickets={myticket} />
-        </div>
+        {isVisible ? (
+          <div className="addingComments">
+            <AddCommentsContainer tickets={myticket} />
+          </div>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
@@ -68,7 +83,8 @@ function mapStateToProps(state) {
   return {
     users: state.userlist,
     tickets: state.ticketList,
-    comments: state.commentList
+    comments: state.commentList,
+    token: state.userToken
   };
 }
 

@@ -103,7 +103,7 @@ export function createTicket(price, description, picture, eventId, userId) {
       .post(`${url}/ticket`)
       .send({ price, description, picture, eventId, userId })
       .then(response => {
-        const action = jwt(response.body);
+        const action = newEvent(response.body);
         console.log(response.body);
         dispatch(action);
       })
@@ -120,7 +120,7 @@ export function addComment(name, text, ticketId) {
       .post(`${url}/comment`)
       .send({ name, text, ticketId })
       .then(response => {
-        const action = jwt(response.body);
+        const action = newEvent(response.body);
         console.log(response.body);
         dispatch(action);
       })

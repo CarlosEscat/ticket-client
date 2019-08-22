@@ -18,6 +18,13 @@ class TicketListContainer extends React.Component {
       fontWeight: "bold"
     };
 
+    let isVisible = false;
+    const token = this.props.token;
+
+    if (Object.keys(token).length !== 0) {
+      isVisible = true;
+    }
+
     //console.log(myevent);
     return (
       <div>
@@ -31,9 +38,13 @@ class TicketListContainer extends React.Component {
         <br />
         <br />
         <br />
-        <NavLink to={`/event/${eventId}/Addticket`}>
-          <label style={style}>Add New Ticket</label>
-        </NavLink>
+        {isVisible ? (
+          <NavLink to={`/event/${eventId}/Addticket`}>
+            <label style={style}>Add New Ticket</label>
+          </NavLink>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
@@ -45,7 +56,8 @@ function mapStateToProps(state) {
   return {
     tickets: state.ticketList,
     users: state.userlist,
-    events: state.eventList
+    events: state.eventList,
+    token: state.userToken
   };
 }
 
