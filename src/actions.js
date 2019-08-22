@@ -131,17 +131,23 @@ export function addComment(name, text, ticketId) {
   };
 }
 
-function allEvents(payload) {
+export function allEvents(payload) {
   return {
     type: ALL_EVENTS,
     payload
   };
 }
 
-export const loadEvents = () => (dispatch, getState) => {
+export const loadEvents = offset => (dispatch, getState) => {
   if (getState().events) return;
+  //console.log("offset: ", offset);
+  if (offset === undefined) {
+    offset = 0;
+  } else {
+    offset = offset.toString();
+  }
 
-  request(`${url}/event`)
+  request(`${url}/event?offset=${offset}`)
     .then(response => {
       //console.log("response.body test:", response.body.events);
       dispatch(allEvents(response.body.events));
@@ -190,10 +196,10 @@ const ticketEdit = ticket => ({
   ticket
 });
 
-export const updateTicket = (id, data) => dispatch => {
+export const updateTicket = (id, data, jwt) => dispatch => {
   request
     .put(`${url}/ticket/${id}`)
-    .send(data)
+    .send({ jwt, data })
     .then(response => {
       dispatch(ticketEdit(response.body));
     })

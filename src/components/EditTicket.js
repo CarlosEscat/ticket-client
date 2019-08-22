@@ -17,18 +17,22 @@ class editTicket extends React.Component {
     event.preventDefault();
 
     const { price, description, picture } = this.state;
-    //const eventId = this.props.match.params.eventId;
+    const jwt = this.props.jwt;
     //console.log("eventId test: ", eventId);
     const id = this.props.myticket.id;
     const eventId = this.props.myticket.eventId;
     const userId = this.props.myticket.userId;
-    this.props.updateTicket(id, {
-      price,
-      description,
-      picture,
-      eventId,
-      userId
-    });
+    this.props.updateTicket(
+      id,
+      {
+        price,
+        description,
+        picture,
+        eventId,
+        userId
+      },
+      jwt
+    );
 
     this.setState({
       id: "",
@@ -112,7 +116,8 @@ function mapStateToProps(state) {
   return {
     tickets: state.ticketList,
     users: state.userlist,
-    myticket: state.ticketUsed
+    myticket: state.ticketUsed,
+    jwt: state.userToken.jwt
   };
 }
 
