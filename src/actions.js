@@ -2,6 +2,9 @@ import * as request from "superagent";
 import { url } from "./constants";
 
 export const JWT = "JWT";
+export const ADD_USER = "ADD_USER";
+export const ADD_EVENT = "ADD_EVENT";
+export const ADD_TICKET = "ADD_TICKET";
 export const ALL_USERS = "ALL_USERS";
 export const ALL_EVENTS = "ALL_EVENTS";
 export const EVENT_TICKETS = "EVENT_TICKETS";
@@ -11,6 +14,13 @@ export const TICKET_EDIT = "TICKET_EDIT";
 function jwt(payload) {
   return {
     type: JWT,
+    payload
+  };
+}
+
+export function addUser(payload) {
+  return {
+    type: ADD_USER,
     payload
   };
 }
@@ -50,13 +60,33 @@ export const loadUsers = () => (dispatch, getState) => {
     .catch(console.error);
 };
 
+// export function addEvent(name, description, logo, start_date, end_date) {
+//   return request
+//     .post(`${url}/event`)
+//     .send({ name, description, logo, start_date, end_date })
+//     .then(response => {
+//       console.log("event added successfully", response.body);
+//     })
+//     .catch(error => {
+//       console.log("Something went wrong adding event");
+//       console.log(error);
+//     });
+// }
+
+function newEvent(payload) {
+  return {
+    type: ADD_EVENT,
+    payload
+  };
+}
+
 export function addEvent(name, description, logo, start_date, end_date) {
   return function(dispatch) {
     request
       .post(`${url}/event`)
       .send({ name, description, logo, start_date, end_date })
       .then(response => {
-        const action = jwt(response.body);
+        const action = newEvent(response.body);
         console.log(response.body);
         dispatch(action);
       })
@@ -169,3 +199,10 @@ export const updateTicket = (id, data) => dispatch => {
     })
     .catch(console.error);
 };
+
+export function addTicket(payload) {
+  return {
+    type: ADD_TICKET,
+    payload
+  };
+}

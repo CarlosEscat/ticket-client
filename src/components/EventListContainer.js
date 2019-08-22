@@ -12,11 +12,16 @@ class EventListContainer extends React.Component {
       padding: "10px",
       fontWeight: "bold"
     };
-
+    var today = new Date();
+    //console.log("testing date: ", today);
+    const currentevents = this.props.events.filter(
+      event => new Date(event.end_date) > today
+    );
+    //console.log("current events: ", currentevents);
     return (
       <div>
         <p>Event List:</p>
-        <EventList events={this.props.events} />
+        <EventList events={currentevents} />
         <br />
         <br />
         <br />

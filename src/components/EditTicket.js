@@ -16,10 +16,12 @@ class editTicket extends React.Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    const { price, description, picture, eventId, userId } = this.state;
+    const { price, description, picture } = this.state;
     //const eventId = this.props.match.params.eventId;
     //console.log("eventId test: ", eventId);
-    const id = 3;
+    const id = this.props.myticket.id;
+    const eventId = this.props.myticket.eventId;
+    const userId = this.props.myticket.userId;
     this.props.updateTicket(id, {
       price,
       description,
@@ -45,6 +47,9 @@ class editTicket extends React.Component {
   };
 
   render() {
+    const pr = this.props.myticket.price;
+    const d = this.props.myticket.description;
+    const pic = this.props.myticket.picture;
     return (
       <div>
         <h2> Edit Ticket </h2>
@@ -56,7 +61,7 @@ class editTicket extends React.Component {
               type="text"
               name="price"
               value={this.state.price}
-              placeholder={"Price"}
+              placeholder={pr}
               onChange={this.onChange}
             />
             <p>Description:</p>
@@ -64,7 +69,7 @@ class editTicket extends React.Component {
               type="textarea"
               name="description"
               value={this.state.description}
-              placeholder={"Description"}
+              placeholder={d}
               onChange={this.onChange}
             />
             <p>Picture:</p>
@@ -72,10 +77,10 @@ class editTicket extends React.Component {
               type="text"
               name="picture"
               value={this.state.picture}
-              placeholder={"Ticket picture url"}
+              placeholder={pic}
               onChange={this.onChange}
             />
-            <p>Event Id:</p>
+            {/* <p>Event Id:</p>
             <input
               type="text"
               name="eventId"
@@ -90,7 +95,7 @@ class editTicket extends React.Component {
               value={this.state.userId}
               placeholder={"userId"}
               onChange={this.onChange}
-            />
+            /> */}
             <br />
             <button type="submit"> Update Ticket </button>
           </form>
@@ -103,7 +108,15 @@ const mapDispatchToProps = {
   updateTicket
 };
 
+function mapStateToProps(state) {
+  return {
+    tickets: state.ticketList,
+    users: state.userlist,
+    myticket: state.ticketUsed
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(editTicket);

@@ -1,5 +1,5 @@
 import React from "react";
-import { login, loadUsers } from "../actions";
+import { login, loadUsers, addUser } from "../actions";
 import { connect } from "react-redux";
 import "./SignUp.css";
 
@@ -16,6 +16,8 @@ class DisplayLogin extends React.Component {
     this.props.loadUsers();
     console.log("Name: ", name, " Password: ", password);
     this.props.login(name, password);
+
+    this.props.addUser(name);
 
     this.setState({ name: "", password: "" });
   };
@@ -61,11 +63,13 @@ class DisplayLogin extends React.Component {
 
 const mapDispatchToProps = {
   login,
-  loadUsers
+  loadUsers,
+  addUser
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  users: state.userlist
 });
 
 export default connect(

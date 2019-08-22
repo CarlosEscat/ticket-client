@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { addEvent } from "../actions";
+import * as request from "superagent";
+import { url } from "../constants";
 import "./SignUp.css";
 
 class AddEvent extends React.Component {
@@ -12,12 +14,28 @@ class AddEvent extends React.Component {
     end_date: ""
   };
 
+  createEvent = async ({ data }) => {
+    const { jwt } = this.props;
+    console.log(jwt);
+    const response = await request
+      .post(`${url}/event`)
+      .send({ jwt, data })
+      .set("Authorization", `Bearer ${this.props.user}`)
+      .catch(error => {
+        console.log("Something went wrong adding event");
+        console.log(error);
+      });
+
+    console.log("response test:", response);
+  };
+
   onSubmit = async event => {
     event.preventDefault();
 
     const { name, description, logo, start_date, end_date } = this.state;
 
     this.props.addEvent(name, description, logo, start_date, end_date);
+    //this.createEvent({ name, description, logo, start_date, end_date });
 
     this.setState({
       name: "",
@@ -95,7 +113,14 @@ const mapDispatchToProps = {
   addEvent
 };
 
+function mapStateToProps(state) {
+  return {
+    jwt: state.userToken.jwt,
+    user: state.userIn
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AddEvent);
