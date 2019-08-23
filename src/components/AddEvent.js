@@ -14,27 +14,28 @@ class AddEvent extends React.Component {
     end_date: ""
   };
 
-  createEvent = async ({ data }) => {
-    const { jwt } = this.props;
-    console.log(jwt);
-    const response = await request
-      .post(`${url}/event`)
-      .send({ jwt, data })
-      .set("Authorization", `Bearer ${this.props.user}`)
-      .catch(error => {
-        console.log("Something went wrong adding event");
-        console.log(error);
-      });
+  // createEvent = async ({ data }) => {
+  //   const { jwt } = this.props;
+  //   console.log(jwt);
+  //   const response = await request
+  //     .post(`${url}/event`)
+  //     .send({ jwt, data })
+  //     .set("Authorization", `Bearer ${this.props.user}`)
+  //     .catch(error => {
+  //       console.log("Something went wrong adding event");
+  //       console.log(error);
+  //     });
 
-    console.log("response test:", response);
-  };
+  //   console.log("response test:", response);
+  // };
 
   onSubmit = async event => {
     event.preventDefault();
 
     const { name, description, logo, start_date, end_date } = this.state;
-
-    this.props.addEvent(name, description, logo, start_date, end_date);
+    const { jwt } = this.props;
+    console.log("testing jwt: ", jwt);
+    this.props.addEvent(jwt, { name, description, logo, start_date, end_date });
     //this.createEvent({ name, description, logo, start_date, end_date });
 
     this.setState({

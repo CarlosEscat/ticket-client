@@ -80,11 +80,11 @@ function newEvent(payload) {
   };
 }
 
-export function addEvent(name, description, logo, start_date, end_date) {
+export function addEvent(jwt, data) {
   return function(dispatch) {
     request
       .post(`${url}/event`)
-      .send({ name, description, logo, start_date, end_date })
+      .send({ jwt, data })
       .then(response => {
         const action = newEvent(response.body);
         console.log(response.body);

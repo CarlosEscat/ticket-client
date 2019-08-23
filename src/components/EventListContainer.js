@@ -14,9 +14,12 @@ class EventListContainer extends React.Component {
     console.log("eventList offset: ", offset);
   }
 
-  render() {
+  componentDidMount() {
     this.props.loadEvents();
     this.props.loadUsers();
+  }
+
+  render() {
     var style = {
       padding: "10px",
       fontWeight: "bold"
